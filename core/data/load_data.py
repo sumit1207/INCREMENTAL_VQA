@@ -93,28 +93,10 @@ class DataSet(Data.Dataset):
             self.ques_list += json.load(open(__C.QUESTION_PATH[split], 'r'))['questions']
             # self.qid_to_ques = ques_load(self.ques_list)
             if __C.RUN_MODE in ['train']:
-                # data=json.load(open(__C.ANSWER_PATH[split], 'r'))['annotations']
-                self.ans_list+=json.load(open(__C.ANSWER_PATH[split], 'r'))['annotations']
-                # for i in data:
-                #     # if((split =='val') and (i['answer_type']=='number')):
-                #     #     continue
-                #     # else:
-                #     #     self.ans_list.append(i)
-                #     if(split =='val'):
-                #         ques = self.qid_to_ques[str(i['question_id'])]['question']
-                #         flag=False
-                #         for t in ques.split():
-                #             if t in unique_list :
-                #                 flag=True  ##uniques question only present in val
-                #                 break
-                #         if (i['answer_type']=='number') and flag :  #unique question , don't add number type question
-                #             continue
-                #         self.ans_list.append(i)
-                #     else:
-                #         self.ans_list.append(i)
-                # data=json.load(open(__C.ANSWER_PATH[split], 'r'))['annotations']  #for incremental learning stuff
-                #     if(i['answer_type']=="number" and i['answer_type']=='yes/no'):
-                #             self.ans_list.append(i)
+                data=json.load(open(__C.ANSWER_PATH[split], 'r'))['annotations']
+                for i in data:  # changes made here for incremental learnign , include or condition for type of question you need
+                    if(i['answer_type']=="number" or i['answer_type']=='yes/no'):
+                            self.ans_list.append(i)
 
 
 
